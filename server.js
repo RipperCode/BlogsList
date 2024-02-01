@@ -5,13 +5,20 @@
 
 'use strict';
 
-const express = require('express');
-require('dotenv').config()
+const express = require('express')
+const app = express();
+const cors = require('cors');
+app.use(cors())
+app.use(express.json())
+const blogRouter = require('./controllers/blogsC')
 
+require('dotenv').config()
 const PORT = process.env.PORT
 
-const app = express();
+app.use('/api/blogs', blogRouter)
+
 app.get('/', (req, res) => {
 	res.send('Hello remote world!\n');
 });
+
 app.listen(PORT)
