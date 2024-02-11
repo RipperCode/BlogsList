@@ -1,0 +1,2 @@
+GET https://3000-rippercode-blogslist-138one36vuq.ws-us108.gitpod.io/api/blogs
+Content-Type: application/json

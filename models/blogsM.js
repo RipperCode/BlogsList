@@ -4,9 +4,18 @@ require('dotenv').config()
 mongoose.connect(process.env.MONGODB_URI).then(res =>  console.log('Connect to mongodb') )
 
 const blogSchema = new mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
+  title: {
+    type: String,
+    required: true
+  },
+  author: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  },
   likes: Number
 })
 

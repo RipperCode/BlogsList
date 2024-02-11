@@ -1,9 +1,8 @@
-POST https://3000-rippercode-blogslist-138one36vuq.ws-us107.gitpod.io/api/blogs
+POST https://3000-rippercode-blogslist-138one36vuq.ws-us108.gitpod.io/api/blogs
 Content-Type: application/json
 
 {
-    "tittle": "Goal",
+    "title": "Goal",
     "author": "miguel de servantes",
-    "url": "https://www.goal.com/es/noticias/resumen-en-video-del-fc-barcelona-vs-osasuna-laliga-2023-24-goles-y-polemicas-del-partido/blt092ec0bf601ccc2a",
-    "likes": 0
+    "url": "https://www.goal.com/es/noticias/resumen-en-video-del-fc-barcelona-vs-osasuna-laliga-2023-24-goles-y-polemicas-del-partido/blt092ec0bf601ccc2a"
 }
