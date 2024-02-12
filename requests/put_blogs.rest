@@ -1,0 +1,7 @@
+PUT  https://3000-rippercode-blogslist-138one36vuq.ws-us108.gitpod.io/api/blogs/65ca8db55ce2c21e9ab83dff
+Content-Type: application/json
+
+{
+    "url": "http://blog.cleancoder.com/",
+    "likes":20
+}
