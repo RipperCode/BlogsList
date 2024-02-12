@@ -12,6 +12,10 @@ app.get('/', (req, res) => {
 	res.send('Hello remote world!\n');
 });
 
+app.use((req, res)=>{
+	res.status(404).json({error: 'ruta invalida'})
+})
+
 app.use((error, req,res, next)=>{
 	if (error.name === 'ValidationError') return res.status(400).json({ error: error.message })
 })
