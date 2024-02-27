@@ -2,7 +2,7 @@ POST  https://3000-rippercode-blogslist-138one36vuq.ws-us108.gitpod.io/api/users
 Content-Type: application/json
 
 {
-    "username": "equilibrador",
-    "name": "Luis Urbaneja",
-    "password": "lienzo159"
+    "username": "Ripperxone",
+    "name": "diosmar marquez",
+    "password": "1asdlashlahf45"
 }

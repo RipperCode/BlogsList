@@ -22,7 +22,7 @@ const usersSchema = new mongoose.Schema({
     blogs: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            refer:"Blog"
+            ref:"Blogs"
         }
     ]
 
@@ -33,7 +33,7 @@ const usersSchema = new mongoose.Schema({
       delete returnedObject._id
       delete returnedObject.__v
       // el passwordHash no debe mostrarse
-      delete returnedObject.passwordHash
+      delete returnedObject.password
     }
   })
   usersSchema.plugin(uniqueValidator)
