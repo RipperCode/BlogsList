@@ -1,5 +1,6 @@
 POST https://3000-rippercode-blogslist-138one36vuq.ws-us108.gitpod.io/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJpcHBlcnhvbmUiLCJpZCI6IjY1ZGRmODc3ZWViN2VmZWU1MDgxMzkzNSIsImlhdCI6MTcwOTY1NDk3MX0.9A25BP4Skk_Pfmk3RavIGtCdg47MBvS26QTEZB63vKM
 
 {
     "title": "Canonical string reduction",

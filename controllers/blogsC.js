@@ -1,35 +1,37 @@
 const blogsRouter = require('express').Router()
 const blogModel = require('../models/blogsM')
 const blogUserModel = require('../models/blogs-users-M')
-
+const jwt = require('jsonwebtoken')
 
 
 blogsRouter.get('/', async(req, res)=>{
-    const allBlogs = await blogModel.find({})
+    const allBlogs = await blogModel.find({}).populate('user')
     res.json(allBlogs)    
 })
 
 blogsRouter.post('/', async(req, res, next)=>{
     const body = req.body
-    
+    console.log('este es el token dentro del controlador: ',req.token)
    try {
-    const userAll = await blogUserModel.find({})
-    const indexAleatorio = Math.floor(Math.random() * userAll.length)
-    const userAleatorio = userAll[indexAleatorio]
-    /* const userRandom = await blogUserModel.aggregate([{ $sample: { size: 1 } }])
-    const user = await blogUserModel.findById(userRandom[0]._id) */
+    
+    const decodedToken = jwt.verify(req.token, process.env.SECRET)
+    console.log(decodedToken)
+    if (!decodedToken.id) {
+    return res.status(401).json({ error: 'token invalid' })
+    }
+    const user = await blogUserModel.findById(decodedToken.id)
     
     const blog = new blogModel({
         title : body.title,
         author: body.author,
         url: body.url,
         likes: body.likes ?? 0,
-        user: userAleatorio._id
+        user: user._id
     })
     
     const savedBlog = await blog.save()
-    userAleatorio.blogs = userAleatorio.blogs.concat(savedBlog._id)
-    await userAleatorio.save()
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
     
     res.json(savedBlog)
    } catch (error) {

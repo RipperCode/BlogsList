@@ -1,0 +1,7 @@
+POST  https://3000-rippercode-blogslist-138one36vuq.ws-us108.gitpod.io/api/login
+Content-Type: application/json
+
+{
+    "username": "Ripperxone",
+    "password": "1asdlashlahf45"
+}
