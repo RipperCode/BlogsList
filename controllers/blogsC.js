@@ -5,21 +5,21 @@ const jwt = require('jsonwebtoken')
 
 
 blogsRouter.get('/', async(req, res)=>{
-    const allBlogs = await blogModel.find({}).populate('user')
+    const allBlogs = await blogModel.find({}).populate('user', {username:1, name:1})
     res.json(allBlogs)    
 })
 
 blogsRouter.post('/', async(req, res, next)=>{
     const body = req.body
-    console.log('este es el token dentro del controlador: ',req.token)
+    
    try {
     
-    const decodedToken = jwt.verify(req.token, process.env.SECRET)
-    console.log(decodedToken)
-    if (!decodedToken.id) {
+   
+    
+    if (!req.user) {
     return res.status(401).json({ error: 'token invalid' })
     }
-    const user = await blogUserModel.findById(decodedToken.id)
+    const user = await blogUserModel.findById(req.user)
     
     const blog = new blogModel({
         title : body.title,
@@ -41,14 +41,22 @@ blogsRouter.post('/', async(req, res, next)=>{
 })
 
 blogsRouter.delete('/:id', async (req, res, next)=>{
+    const id = req.params.id
+   
     try {
-        const id = req.params.id
-        await blogModel.findByIdAndDelete(id)
-        res.status(204).end() 
-    } catch (error) {
-        next(error)
-    }
+        
+        if (!req.user) return res.status(401).json({ error: 'token invalid' })
     
+        const blog = await blogModel.findById(id)
+        
+        if (blog.user.toString() === req.user.toString()){
+            await blogModel.findByIdAndDelete(id)
+            res.status(204).json({message: 'blog eliminado'})
+        }else return res.status(401).json({ error: 'no autorizado para eliminar este blog' })
+            
+    } catch (error) {
+        next()
+    }
 })
 
 blogsRouter.put('/:id', async (req, res, next)=> {

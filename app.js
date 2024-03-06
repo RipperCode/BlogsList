@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express();
 const cors = require('cors');
+const {tokenMiddleware, userMiddleware}  = require('./middleware/middlewaresBlogs')
+
 app.use(cors())
 app.use(express.json())
 app.use(tokenMiddleware)
+app.use(userMiddleware)
 app.disable('x-powered-by')
 
 const blogRouter = require('./controllers/blogsC')
@@ -27,22 +30,12 @@ app.use((error, req,res, next)=>{
 	if (error.name === 'ValidationError') {
 		return res.status(400).json({error: error.message})
 	}
-	if (error.name === 'CastError') return res.status(400).json({error: error})
+	else if (error.name === 'CastError') return res.status(400).json({error: error.message})
+	else if (error.name === 'JsonWebTokenError') return res.status(401).json({error: error.message})
+	else if (error.name === 'TokenExpiredError') return res.status(401).json({error: error.message})
 	next(error)
+
 })
 
-function tokenMiddleware(req, res, next){
-	if(req.method !== 'POST') return next()
-	if(req.url !== '/api/blogs') return next()
-	
-	const authorization = req.get('authorization')
-	
-	if(!(authorization && authorization.startsWith('Bearer'))){
-		res.status(401).json({error: 'Unauthorized'})
-	}else{
-		req.token = authorization.replace('Bearer ', '')
-		next()
-	}
-	
-}
+
 module.exports = app
